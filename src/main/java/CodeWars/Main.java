@@ -4,9 +4,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.maxBy;
-
 public class Main {
     static int[] x = {1, 2, 2, 1, 3, 2, 4, 6, 5, 2, 7};
     static String word = "aabBcde1321";
@@ -14,12 +11,13 @@ public class Main {
     static String notAnagram = "aabBcde1325";
 
 
+
     public static void main(String[] args) {
     //    System.out.println(mostFrequentItemCount(x));
     //    System.out.println(duplicateCount(word));
-        System.out.println(isAnagram(word, anagram));
-        System.out.println(isAnagram(word, notAnagram));
-
+    //    System.out.println(isAnagram(word, anagram));
+    //    System.out.println(isAnagram(word, notAnagram));
+    //    System.out.println(countShifterWords("who is who")); // expected two, since duplicate words don't count
     }
 
     /**
@@ -52,7 +50,6 @@ public class Main {
     public static boolean isAnagram(String test, String original) {
         test = Arrays.stream(test.split("")).sorted(String::compareTo).collect(Collectors.joining(""));
         original = Arrays.stream(original.split("")).sorted(String::compareTo).collect(Collectors.joining(""));
-        System.out.println(test+" "+ original);
         return (test.equals(original));
     }
 
@@ -84,13 +81,28 @@ public class Main {
     }
 
     /**
-     * Given a text, count the occurance of the most frequent character in the text
+     * Given a text, count the occurrence of the most frequent character in the text
      * @param text the String obtained as source
      * @return int
      */
     static public int frequencyCount(String text) {
         return (int) Arrays.stream(text.split("")).collect(Collectors.groupingBy(
                 Function.identity(), Collectors.counting())).values().stream().mapToLong(n->n).max().getAsLong();
+    }
+
+    /**
+     * for any given string check how many words of them are shifter words
+     * a word if shifter if it contains only these letters: hinosxzmw
+     * a word is counted only once
+     */
+    public static int countShifterWords(String st){
+        if (st.length()==0) return 0;
+        String[] words = st.trim().split(" ");
+        Set res = new HashSet();
+        for (String word:words){
+            if(word.replaceAll("(?i)[hinosxzmw]", "").length()==0) res.add(word);
+        }
+        return res.size();
     }
 
 }
