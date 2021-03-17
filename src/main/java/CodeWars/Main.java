@@ -18,6 +18,8 @@ public class Main {
     //    System.out.println(isAnagram(word, anagram));
     //    System.out.println(isAnagram(word, notAnagram));
     //    System.out.println(countShifterWords("who is who")); // expected two, since duplicate words don't count
+        System.out.println(reverseWords("Három egész napon át"));
+
     }
 
     /**
@@ -103,6 +105,18 @@ public class Main {
             if(word.replaceAll("(?i)[hinosxzmw]", "").length()==0) res.add(word);
         }
         return res.size();
+    }
+
+    /**
+     * given a string, reverse the order of the words based on insertion
+     */
+    public static String reverseWords(String str){
+        StringJoiner res = new StringJoiner(" ");
+        String[] words = str.split(" ");
+        for(int i = (words.length-1) ; i>=0; i--) {
+            res.add(words[i]);
+        }
+        return res.toString();
     }
 
 }
